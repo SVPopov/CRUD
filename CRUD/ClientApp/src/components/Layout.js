@@ -1,12 +1,8 @@
 import React from 'react';
-import { Col, Grid, Row } from 'react-bootstrap';
+import Grid from '@material-ui/core/Grid';
 
 export default props => (
-  <Grid fluid>
-    <Row>
-      <Col sm={12}>
+    <Grid item xs={12}>
         {props.children}
-      </Col>
-    </Row>
-  </Grid>
+    </Grid>
 );
