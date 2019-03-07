@@ -1,0 +1,6 @@
+/.vs/CRUD/DesignTimeBuild/.dtbcache
+/.vs/CRUD/v15
+/.vs/CRUD/v15/*
+/CRUD.Common/obj
+/CRUD.Common/bin
+/CRUD.Repositories/obj
