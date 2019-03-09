@@ -24,5 +24,24 @@ namespace CRUD.Controllers
             var userList = crudService.GetUsersList();
             return new JsonResult(userList);
         }
+
+        [HttpPost]
+        public JsonResult Post(User user)
+        {
+            if (this.ModelState.IsValid)
+            {
+                try
+                {
+                    var insertedUser = crudService.CreateUser(user);
+                    return new JsonResult(true);
+                }
+                catch (Exception)
+                {
+                    return new JsonResult(false);
+                }
+            }
+
+            return new JsonResult(false);
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CRUD.Common.Entities;
 using CRUD.Common.Repositories;
 
@@ -15,12 +16,21 @@ namespace CRUD.Repositories
 
         public IEnumerable<User> GetUserList()
         {
-            // TODO: To implement read data from EF Context
-            return new List<User> {
-                new User{ Id = 1, Name = "Tom", Department = new Department{ Id = 1, Titile = "IT" }, DepartmentId = 1},
-                new User{ Id = 2, Name = "Sam", Department = new Department{ Id = 2, Titile = "QA" }, DepartmentId = 2},
-                new User{ Id = 3, Name = "John", Department = new Department{ Id = 1, Titile = "IT" }, DepartmentId = 1},
-            };
+            return context.Users;
+        }
+
+        public bool CreateUser(User user)
+        {
+            try
+            {
+                context.Users.Add(user);
+                context.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

@@ -8,5 +8,7 @@ namespace CRUD.Common.Repositories
     public interface IRepository
     {
         IEnumerable<User> GetUserList();
+
+        bool CreateUser(User user);
     }
 }

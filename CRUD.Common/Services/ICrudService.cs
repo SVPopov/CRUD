@@ -8,5 +8,7 @@ namespace CRUD.Common.Services
     public interface ICrudService
     {
         IEnumerable<User> GetUsersList();
+
+        bool CreateUser(User user);
     }
 }
