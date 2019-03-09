@@ -1,29 +1,22 @@
-import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
-import { createBrowserHistory } from 'history';
-import configureStore from './store/configureStore';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import { HashRouter, Route } from 'react-router-dom';
+import * as serviceWorker from './serviceWorker';
+import store from './store';
 
-// Create browser history to use in the Redux store
-const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
-const history = createBrowserHistory({ basename: baseUrl });
-
-// Get the application-wide store instance, prepopulating with state from the server where available.
-const initialState = window.initialReduxState;
-const store = configureStore(history, initialState);
-
-const rootElement = document.getElementById('root');
+import './styles/main.scss';
+import App from './containers/App';
 
 ReactDOM.render(
-  <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <App />
-    </ConnectedRouter>
-  </Provider>,
-  rootElement);
+    <Provider store={store}>
+        <div className="app">
+            <HashRouter>
+                <Route path="" component={App} />
+            </HashRouter>
+        </div>
+    </Provider>,
+    document.getElementById('reactAppRoot'),
+);
 
-registerServiceWorker();
+serviceWorker.unregister();
