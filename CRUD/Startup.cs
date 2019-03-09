@@ -1,3 +1,4 @@
+using System;
 using CRUD.Common.Repositories;
 using CRUD.Common.Services;
 using CRUD.Repositories;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -23,6 +25,14 @@ namespace CRUD
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string connectionName = "DefaultConnection";
+            string connectionString = this.Configuration.GetConnectionString(connectionName);
+
+            Action<DbContextOptionsBuilder> setupDatabase = options =>
+            {
+                options.UseSqlServer(connectionString, b => b.MigrationsAssembly("CRUD.Web"));
+            };
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // In production, the React files will be served from this directory
@@ -31,6 +41,7 @@ namespace CRUD
                 configuration.RootPath = "ClientApp/build";
             });
 
+            services.AddDbContext<CrudDbContext>(setupDatabase);
             services.AddTransient<ICrudService, CrudService>();
             services.AddTransient<IRepository, CrudRepository>();
         }

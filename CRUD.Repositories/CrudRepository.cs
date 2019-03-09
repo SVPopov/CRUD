@@ -6,6 +6,13 @@ namespace CRUD.Repositories
 {
     public class CrudRepository : IRepository
     {
+        private readonly CrudDbContext context;
+
+        public CrudRepository(CrudDbContext context)
+        {
+            this.context = context;
+        }
+
         public IEnumerable<User> GetUserList()
         {
             // TODO: To implement read data from EF Context

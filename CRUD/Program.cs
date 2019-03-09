@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 
 namespace CRUD
 {
@@ -12,6 +13,13 @@ namespace CRUD
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((hostContext, config) =>
+                {
+                    config.SetBasePath(hostContext.HostingEnvironment.ContentRootPath);
+                    config.AddJsonFile("appsettings.json", optional: true);
+                    config.AddJsonFile("appsettings_connection_params.json", optional: true);
+                    config.AddEnvironmentVariables();
+                })
                 .UseStartup<Startup>();
     }
 }
