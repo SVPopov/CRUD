@@ -1,3 +1,7 @@
+using CRUD.Common.Repositories;
+using CRUD.Common.Services;
+using CRUD.Repositories;
+using CRUD.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +30,9 @@ namespace CRUD
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            services.AddTransient<ICrudService, CrudService>();
+            services.AddTransient<IRepository, CrudRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
