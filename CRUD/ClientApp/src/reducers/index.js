@@ -1,8 +1,12 @@
 import { combineReducers } from 'redux';
+import notificationData from './notificationData';
 import userData from './userData';
+import departmentData from './departmentData';
 
 const reducers = {
+    notificationData,
     userData,
+    departmentData,
 };
 
 const appReducer = combineReducers(reducers);

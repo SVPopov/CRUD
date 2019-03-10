@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using CRUD.Common.Entities;
 using CRUD.Common.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace CRUD.Repositories
 {
@@ -16,7 +19,7 @@ namespace CRUD.Repositories
 
         public IEnumerable<User> GetUserList()
         {
-            return context.Users;
+            return context.Users.Include(u => u.Department);
         }
 
         public bool CreateUser(User user)
@@ -31,6 +34,28 @@ namespace CRUD.Repositories
             {
                 return false;
             }
+        }
+
+        public IEnumerable<Department> GetDepartmentList()
+        {
+            if (context.Department.Count() == 0)
+            {
+                PrepareDataForDepartments();
+            }
+
+            return context.Department;
+        }
+
+        // Temporary solve until not implement CRUD functionality for departments
+        private void PrepareDataForDepartments()
+        {
+            context.Department.AddRange( new List<Department> {
+                new Department{ Title="IT"},
+                new Department{ Title="QA"},
+                new Department{ Title="DevOps"},
+            });
+
+            context.SaveChanges();
         }
     }
 }

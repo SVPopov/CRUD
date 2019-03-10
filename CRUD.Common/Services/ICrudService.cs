@@ -9,6 +9,8 @@ namespace CRUD.Common.Services
     {
         IEnumerable<User> GetUsersList();
 
+        IEnumerable<Department> GetDepartmentsList();
+
         bool CreateUser(User user);
     }
 }

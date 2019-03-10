@@ -9,6 +9,8 @@ namespace CRUD.Common.Repositories
     {
         IEnumerable<User> GetUserList();
 
+        IEnumerable<Department> GetDepartmentList();
+
         bool CreateUser(User user);
     }
 }

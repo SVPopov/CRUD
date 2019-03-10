@@ -5,13 +5,6 @@ import { withStyles } from '@material-ui/core/styles';
 import './style.scss';
 
 import {
-    getUserList,
-    editUser,
-    createUser,
-    deleteUser,
-} from '../../actions/user/UserActions';
-
-import {
     Grid,
 } from '@material-ui/core';
 
@@ -58,20 +51,12 @@ class User extends Component {
         return (
             <Grid container spacing={24}>
                 <Grid item xs={12}>
-                    <h3>SPA</h3>
-                </Grid>
-                <Grid item xs={12}>
                     <MiniDrawer />
                 </Grid>
             </Grid>)
     }
 }
 
-const mapStateToProps = state => ({
-   
-});
-
 export default compose(
-    connect(mapStateToProps),
     withStyles(styles)
 )(User);

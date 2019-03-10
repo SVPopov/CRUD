@@ -21,19 +21,23 @@ namespace CRUD.Controllers
         [HttpGet]
         public JsonResult Get()
         {
-            var userList = crudService.GetUsersList();
+            var userList = crudService.GetUsersList().ToList();
             return new JsonResult(userList);
         }
 
         [HttpPost]
-        public JsonResult Post(User user)
+        public JsonResult Post([FromBody] User user)
         {
             if (this.ModelState.IsValid)
             {
                 try
                 {
                     var insertedUser = crudService.CreateUser(user);
-                    return new JsonResult(true);
+                    return new JsonResult(new {
+                        code = insertedUser ? 201 : 400,
+                        message = insertedUser ? "User has been created" : "User has not been created",
+                        entity = insertedUser
+                    });
                 }
                 catch (Exception)
                 {

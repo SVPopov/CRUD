@@ -17,10 +17,10 @@ function* userDataFlow() {
 
 function* getUserList() {
     try {
-        const response = yield call(UserAPI.getSwimmerList);
-        const data = _.get(response, 'data.entity', {});
 
 
+        const response = yield call(UserAPI.getUserList);
+        const data = _.get(response, 'data', {});
         yield put({
             type: 'USER_LIST_FETCH_SUCCESS',
             payload: {
@@ -35,7 +35,7 @@ function* getUserList() {
 
 function* createUser(action) {
     try {
-        const response = yield call(UserAPI.createSwimmerData, action.payload);
+        const response = yield call(UserAPI.createUser, action.payload);
         const id = _.get(response, 'data.entity.Id', {});
         const code = _.get(response, 'data.code', {});
         const message = _.get(response, 'data.message', {});
@@ -74,7 +74,7 @@ function* createUser(action) {
 
 function* editUser(action) {
     try {
-        const response = yield call(UserAPI.editSwimmerData, action.payload);
+        const response = yield call(UserAPI.editUser, action.payload);
         const code = _.get(response, 'data.code', {});
         const message = _.get(response, 'data.message', {});
 
@@ -116,7 +116,7 @@ function* editUser(action) {
 
 function* deleteUser(action) {
     try {
-        yield call(UserAPI.deleteSwimmer, action.payload);
+        yield call(UserAPI.deleteUser, action.payload);
 
         yield put({
             type: 'USER_DATA_DELETE_SUCCESS',

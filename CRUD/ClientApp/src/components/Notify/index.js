@@ -26,7 +26,7 @@ class Notify extends Component {
 
 
 const mapStateToProps = state => ({
-  //  notification: state.otherData.notification,
+    notification: state.notificationData.notification,
 });
 
 export default compose(

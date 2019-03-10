@@ -3,10 +3,12 @@ const initialState = {
 };
 
 const userData = (state = initialState, action) => {
+    console.log(action);
     switch (action.type) {
         case 'USER_LIST_FETCH_SUCCESS':
             return {
                 ...state,
+                users: action.payload.data
             };
         case 'USER_LIST_FETCH_ERROR':
             return  {
