@@ -69,7 +69,6 @@ class EnhancedTableHead extends React.Component {
 
     render() {
         const { onSelectAllClick, order, orderBy, numSelected, rowCount } = this.props;
-
         return (
             <TableHead>
                 <TableRow>
@@ -146,7 +145,7 @@ const toolbarStyles = theme => ({
 });
 
 let EnhancedTableToolbar = props => {
-    const { numSelected, classes } = props;
+    const { selected, numSelected, classes, method } = props;
 
     return (
         <Toolbar
@@ -169,7 +168,9 @@ let EnhancedTableToolbar = props => {
             <div className={classes.actions}>
                 {numSelected > 0 ? (
                     <Tooltip title="Delete">
-                        <IconButton aria-label="Delete">
+                        <IconButton aria-label="Delete" onClick={() => {
+                            method(deleteUser(selected));
+                        }}>
                             <DeleteIcon />
                         </IconButton>
                     </Tooltip>
@@ -221,7 +222,6 @@ class EnhancedTable extends React.Component {
 
     componentWillReceiveProps(props) {
         if (!!props.users) {
-            console.log(props.users);
             let userList = [];
             props.users.map(item => userList.push(createData(item.id, item.name, item.department)));
             this.setState({ data: userList });
@@ -282,11 +282,10 @@ class EnhancedTable extends React.Component {
         const { classes } = this.props;
         const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
-        console.log(this.props);
-        console.log(this.state);
+
         return (
             <Paper className={classes.root}>
-                <EnhancedTableToolbar numSelected={selected.length} />
+                <EnhancedTableToolbar selected={selected} numSelected={selected.length} method={this.props.dispatch} />
                 <div className={classes.tableWrapper}>
                     <Table className={classes.table} aria-labelledby="tableTitle">
                         <EnhancedTableHead

@@ -49,7 +49,6 @@ class OutlinedTextFields extends React.Component {
     }
 
     componentWillReceiveProps(props) {
-        console.log(props);
         if (!!props.departments) {
             this.setState({
                 departments: props.departments,
@@ -127,12 +126,9 @@ OutlinedTextFields.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => {
-    console.log(state);
-    return ({
-        departments: state.departmentData.departments,
-    });
-}
+const mapStateToProps = state =>  ({
+    departments: state.departmentData.departments,
+});
 
 export default compose(
     connect(mapStateToProps),

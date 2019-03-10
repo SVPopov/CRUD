@@ -12,7 +12,6 @@ const ServerRequest = {
         const opts = {
             cancelToken: cancel.token,
             headers: {
-                // Authorization: 'Bearer ' + localStorage.getItem('USER_JWT'),
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },

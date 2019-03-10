@@ -3,7 +3,6 @@ const initialState = {
 };
 
 const userData = (state = initialState, action) => {
-    console.log(action);
     switch (action.type) {
         case 'USER_LIST_FETCH_SUCCESS':
             return {
