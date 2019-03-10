@@ -46,7 +46,7 @@ function* createUser(action) {
                     type: 'USER_DATA_CREATE_SUCCESS',
                     payload: {
                         data: {
-                            ...action.payload
+                            ...action.payload,
                         }
                     },
                 });
@@ -55,6 +55,9 @@ function* createUser(action) {
                     payload: {
                         data: message,
                     }
+                });
+                yield put({
+                    type: 'USER_LIST_FETCH',
                 });
                 break;
             default:
@@ -133,6 +136,9 @@ function* deleteUser(action) {
                     payload: {
                         data: message,
                     }
+                });
+                yield put({
+                    type: 'USER_LIST_FETCH',
                 });
                 break;
             default:
