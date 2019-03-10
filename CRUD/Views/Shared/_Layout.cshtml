@@ -1,0 +1,16 @@
+﻿@using CRUD.Web.Helpers
+@using Microsoft.AspNetCore.Hosting
+@inject IHostingEnvironment env
+@{
+    string appName = "client";
+    AppMeta meta = AppMeta.GetAppInstance(env, appName);
+}
+
+<div id="reactAppRoot"></div>
+
+<script src="@System.IO.Path.Combine("ClientApp",meta.JsBundlePath)"></script>
+<script src="@System.IO.Path.Combine("ClientApp",meta.JsPath)"></script>
+<script src="@System.IO.Path.Combine("ClientApp",meta.JsMainPath)"></script>
+<link rel="stylesheet" href="@System.IO.Path.Combine("ClientApp",meta.CssPath)" />
+
+

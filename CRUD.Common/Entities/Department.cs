@@ -6,6 +6,6 @@ namespace CRUD.Common.Entities
     {
         public int Id { get; set; }
 
-        public string Titile { get; set; }
+        public string Title { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
@@ -15,6 +15,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import { Button } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
@@ -23,7 +24,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import NavigationIcon from '@material-ui/icons/Navigation';
 
-import TableCustom from '../TableCustom/index';
+import TableCustom from '../TableCustom';
+import OutlinedTextFields from '../OutlinedTextFields';
 
 const drawerWidth = 240;
 
@@ -150,28 +152,28 @@ class MiniDrawer extends React.Component {
                     <div className={classes.toolbar}>
                         <IconButton onClick={this.handleDrawerClose}>
                             {
-                                //theme.direction === 'rtl' ? <MenuIcon /> : <MailIcon />
                                 theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />
                             }
                         </IconButton>
                     </div>
                     <Divider />
                     {[
-                        <AddIcon text={'Add'} />,
-                        <EditIcon text={'Edit'}/>,
-                        <DeleteIcon text={'Delete'} />
+                        <AddIcon text={'Menu #1'} />,
+                        <EditIcon text={'Menu #2'} />,
+                        <DeleteIcon text={'Menu #3'} />
                     ].map((component, index) =>
                         <section key={index}>
                             <Fab size="small" color="primary" aria-label="text" className={classes.fab}>
                                 {component}
                             </Fab>
-                            <span style={{
+                            <Link to={'/'} style={{
                                 marginLeft: '24px',
                                 fontSize: '28px',
                                 fontWeight: 'bold',
-                                color: '#3f51b5' }} >
+                                color: '#3f51b5'
+                            }} >
                                 {component.props.text}
-                            </span>
+                            </Link>
                         </section>
                     )}
                     <Divider />
@@ -179,31 +181,11 @@ class MiniDrawer extends React.Component {
                 <main className={classes.content}>
                     <div className={classes.toolbar} />
                     <Typography paragraph>
-                            {/*
-                            */}
-                        <TableCustom
-                            Items={[
-                                { number: 1, name: 'qwe', department: 'Dev' },
-                                { number: 2, name: 'qaz', department: 'QA' },
-                                { number: 3, name: 'asd', department: 'UI' },
-                                { number: 4, name: 'cxz', department: 'IT' }
-                            ]}
-                            Headers={
-                                ['#', 'User Name', 'Department']
-                            }
-                        />
+                        <TableCustom/>
+                           
                     </Typography>
                     <Typography paragraph>
-                        Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
-                        facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac
-                        tincidunt. Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat
-                        consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus
-                        sed vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in.
-                        In hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem
-                        et tortor. Habitant morbi tristique senectus et. Adipiscing elit duis tristique
-                        sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo
-                        viverra maecenas accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam
-                        ultrices sagittis orci a.
+                        <OutlinedTextFields/>
                     </Typography>
                 </main>
             </div>

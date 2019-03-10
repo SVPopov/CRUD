@@ -1,12 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 
 namespace CRUD
 {
@@ -19,6 +13,13 @@ namespace CRUD
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((hostContext, config) =>
+                {
+                    config.SetBasePath(hostContext.HostingEnvironment.ContentRootPath);
+                    config.AddJsonFile("appsettings.json", optional: true);
+                    config.AddJsonFile("appsettings_connection_params.json", optional: true);
+                    config.AddEnvironmentVariables();
+                })
                 .UseStartup<Startup>();
     }
 }
