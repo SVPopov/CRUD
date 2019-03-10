@@ -11,6 +11,8 @@ namespace CRUD.Common.Services
 
         IEnumerable<Department> GetDepartmentsList();
 
+        bool DeleteUser(IList<int> ids);
+
         bool CreateUser(User user);
     }
 }

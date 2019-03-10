@@ -9,14 +9,13 @@ const UserAPI = {
         return ServerRequest.get('api/v1/users');
     },
     createUser(payload) {
-        console.log(payload);
         return ServerRequest.post('api/v1/users', payload);
     },
     editUser(payload) {
         return ServerRequest.put('api/v1/users', payload);
     },
     deleteUser(payload) {
-        return ServerRequest.delete('api/v1/users', payload);
+        return ServerRequest.delete(`api/v1/users/${payload.join('_')}`);
     },
 
 };

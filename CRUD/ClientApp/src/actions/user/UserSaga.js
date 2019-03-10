@@ -116,14 +116,34 @@ function* editUser(action) {
 
 function* deleteUser(action) {
     try {
-        yield call(UserAPI.deleteUser, action.payload);
+        const response = yield call(UserAPI.deleteUser, action.payload);
+        const code = _.get(response, 'data.code', {});
+        const message = _.get(response, 'data.message', {});
 
-        yield put({
-            type: 'USER_DATA_DELETE_SUCCESS',
-            payload: {
-                data: action.payload,
-            },
-        });
+        switch (code) {
+            case 201:
+                yield put({
+                    type: 'USER_DATA_DELETE_SUCCESS',
+                    payload: {
+                        data: action.payload,
+                    },
+                });
+                yield put({
+                    type: 'NOTIFY_SUCCESS',
+                    payload: {
+                        data: message,
+                    }
+                });
+                break;
+            default:
+                yield put({ type: 'USER_DATA_DELETE_ERROR' });
+                yield put({
+                    type: 'NOTIFY_ERROR',
+                    payload: {
+                        data: message,
+                    }
+                });
+        }
     } catch (error) {
         console.log(error);
         yield put({ type: 'USER_DATA_DELETE_ERROR'});

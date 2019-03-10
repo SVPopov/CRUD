@@ -46,6 +46,21 @@ namespace CRUD.Repositories
             return context.Department;
         }
 
+        public bool DeleteUser(IList<int> ids)
+        {
+            try
+            {
+                var users = context.Users.Where(u => ids.Contains(u.Id));
+                context.Users.RemoveRange(users);
+                context.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         // Temporary solve until not implement CRUD functionality for departments
         private void PrepareDataForDepartments()
         {
