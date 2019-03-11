@@ -95,6 +95,9 @@ function* editUser(action) {
                         data: message,
                     }
                 });
+                yield put({
+                    type: 'USER_LIST_FETCH',
+                });
                 break;
             default:
                 yield put({ type: 'USER_DATA_EDIT_ERROR' });
