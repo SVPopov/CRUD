@@ -53,7 +53,6 @@ class OutlinedTextFields extends React.Component {
                 departments: props.departments,
             });
         }
-        console.log(this.state);
         if (!this.state.department) {
             this.setState({
                 department: props.departments.length > 0 ? props.departments[0].id : '',
@@ -87,8 +86,6 @@ class OutlinedTextFields extends React.Component {
     render() {
         const { classes, isEditMode } = this.props;
         const { name, department } = this.state;
-        console.log(this.state);
-        console.log(this.props);
         return (
             <form className={classes.container} noValidate autoComplete="off">
                 <TextField
