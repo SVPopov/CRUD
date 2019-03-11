@@ -14,5 +14,7 @@ namespace CRUD.Common.Repositories
         bool DeleteUser(IList<int> ids);
 
         bool CreateUser(User user);
+
+        bool EditUser(User user);
     }
 }

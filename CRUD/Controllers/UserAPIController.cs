@@ -42,11 +42,55 @@ namespace CRUD.Controllers
                 }
                 catch (Exception)
                 {
-                    return new JsonResult(false);
+                    return new JsonResult(new
+                    {
+                        code = 400,
+                        message = "User has not been created",
+                        entity = false
+                    });
                 }
             }
 
-            return new JsonResult(false);
+            return new JsonResult(new
+            {
+                code = 400,
+                message = "User has not been created",
+                entity = false
+            });
+        }
+
+        [HttpPut]
+        public JsonResult Put([FromBody] User user)
+        {
+            if (this.ModelState.IsValid)
+            {
+                try
+                {
+                    var isSuccess = crudService.EditUser(user);
+                    return new JsonResult(new
+                    {
+                        code = isSuccess ? 201 : 400,
+                        message = isSuccess ? "User has been updated" : "User has not been updated",
+                        entity = isSuccess
+                    });
+                }
+                catch (Exception)
+                {
+                    return new JsonResult(new
+                    {
+                        code = 400,
+                        message =  "User has not been updated",
+                        entity = false
+                    });
+                }
+            }
+
+            return new JsonResult(new
+            {
+                code = 400,
+                message = "User has not been updated",
+                entity = false
+            });
         }
 
         [HttpDelete("{ids}")]
@@ -65,7 +109,12 @@ namespace CRUD.Controllers
             }
             catch (Exception)
             {
-                return new JsonResult(false);
+                return new JsonResult(new
+                {
+                    code = 400,
+                    message = "Error",
+                    entity = false
+                });
             }
         }
     }
