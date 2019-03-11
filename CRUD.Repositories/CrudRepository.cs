@@ -72,5 +72,23 @@ namespace CRUD.Repositories
 
             context.SaveChanges();
         }
+
+        public bool EditUser(User user)
+        {
+            if (user is null)
+            {
+                throw new ArgumentException("User cannot be null");
+            }
+            try
+            {
+                this.context.Users.Update(user);
+                context.SaveChanges();
+                return true;
+            }
+            catch (Exception) {
+                return false;
+            }
+            
+        }
     }
 }
