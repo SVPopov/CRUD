@@ -16,8 +16,18 @@ import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
+
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import {
@@ -26,6 +36,7 @@ import {
     createUser,
     deleteUser,
 } from '../../actions/user/UserActions';
+import OutlinedTextFields from '../OutlinedTextFields';
 
 
 function createData(id, name, department) {
@@ -72,12 +83,15 @@ class EnhancedTableHead extends React.Component {
         return (
             <TableHead>
                 <TableRow>
-                    <TableCell padding="checkbox">
+                    <TableCell padding="checkbox" style={{ width: 10 }}>
                         <Checkbox
                             indeterminate={numSelected > 0 && numSelected < rowCount}
                             checked={numSelected === rowCount}
                             onChange={onSelectAllClick}
                         />
+                    </TableCell>
+                    <TableCell padding="checkbox" style={{ width: 10 }}>
+                        
                     </TableCell>
                     {rows.map(
                         row => (
@@ -213,6 +227,7 @@ class EnhancedTable extends React.Component {
         selected: [],
         data: [],
         page: 0,
+        openDialog : false,
         rowsPerPage: 5,
     };
 
@@ -276,6 +291,46 @@ class EnhancedTable extends React.Component {
         this.setState({ rowsPerPage: event.target.value });
     };
 
+    handleOpenDialog = (n) => {
+        this.setState({
+            openDialog: true,
+            editUser: n
+        });
+    }
+
+    handleClose = () => {
+        this.setState({
+            openDialog: false,
+            editUser: {}
+        });
+    }
+
+    dialog = () => {
+        const { editUser } = this.state;
+        if (!editUser) {
+            return null;
+        }
+
+        return (
+            <Dialog
+                open={this.state.openDialog}
+                onClose={this.handleClose}
+                aria-labelledby="form-dialog-title"
+            >
+                <DialogTitle id="form-dialog-title">Edit {editUser.name}</DialogTitle>
+                <DialogContent>
+                    <OutlinedTextFields
+                        isEditMode={true}
+                        user={editUser} />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={this.handleClose} color="primary">
+                        Close
+                    </Button>
+                </DialogActions>
+            </Dialog>);
+    }
+
     isSelected = id => this.state.selected.indexOf(id) !== -1;
 
     render() {
@@ -285,6 +340,7 @@ class EnhancedTable extends React.Component {
 
         return (
             <Paper className={classes.root}>
+                {this.dialog()}
                 <EnhancedTableToolbar selected={selected} numSelected={selected.length} method={this.props.dispatch} />
                 <div className={classes.tableWrapper}>
                     <Table className={classes.table} aria-labelledby="tableTitle">
@@ -313,6 +369,12 @@ class EnhancedTable extends React.Component {
                                         >
                                             <TableCell padding="checkbox">
                                                 <Checkbox checked={isSelected} />
+                                            </TableCell>
+                                            <TableCell padding="checkbox">
+                                                <EditIcon onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    this.handleOpenDialog(n);
+                                                }} />
                                             </TableCell>
                                             <TableCell align="right" component="th" scope="row" padding="none">
                                                 {n.id}

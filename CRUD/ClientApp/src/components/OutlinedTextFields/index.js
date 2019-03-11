@@ -12,7 +12,7 @@ import {
     getDepartmentList
 } from '../../actions/department/DepartmentActions';
 import {
-    createUser
+    createUser, editUser
 } from '../../actions/user/UserActions';
 
 const styles = theme => ({
@@ -37,9 +37,8 @@ const styles = theme => ({
 
 class OutlinedTextFields extends React.Component {
     state = {
-        name: '',
-        age: '',
-        department: '',
+        name: !!this.props.user ? this.props.user.name : '',
+        department: !!this.props.user ? this.props.user.department.id : '',
         departments: []
     };
 
@@ -52,7 +51,12 @@ class OutlinedTextFields extends React.Component {
         if (!!props.departments) {
             this.setState({
                 departments: props.departments,
-                department: props.departments.length > 0 ? props.departments[0].id: '',
+            });
+        }
+        console.log(this.state);
+        if (!this.state.department) {
+            this.setState({
+                department: props.departments.length > 0 ? props.departments[0].id : '',
             });
         }
     }
@@ -65,22 +69,34 @@ class OutlinedTextFields extends React.Component {
 
     sendForm = () => {
         const { name, department } = this.state;
-        this.props.dispatch(createUser({
-            Name: name,
-            DepartmentId: department
-        }));
+        const { isEditMode, user } = this.props;
+        if (!!isEditMode) {
+            this.props.dispatch(editUser({
+                Id: user.id,
+                Name: name,
+                DepartmentId: department
+            }));
+        } else {
+            this.props.dispatch(createUser({
+                Name: name,
+                DepartmentId: department
+            }));
+        }
     }
 
     render() {
-        const { classes } = this.props;
-
+        const { classes, isEditMode } = this.props;
+        const { name, department } = this.state;
+        console.log(this.state);
+        console.log(this.props);
         return (
             <form className={classes.container} noValidate autoComplete="off">
                 <TextField
                     id="outlined-dense"
-                    label="Dense"
+                    label="Name"
                     className={classNames(classes.textField, classes.dense)}
                     onChange={this.handleChange('name')}
+                    value={name}
                     margin="dense"
                     fullWidth
                     variant="outlined"
@@ -88,10 +104,10 @@ class OutlinedTextFields extends React.Component {
                 <TextField
                     id="outlined-select-currency"
                     select
-                    label="Select"
+                    label="Department"
                     fullWidth
                     className={classes.textField}
-                    value={this.state.department}
+                    value={department}
                     onChange={this.handleChange('department')}
                     SelectProps={{
                         MenuProps: {
@@ -115,7 +131,7 @@ class OutlinedTextFields extends React.Component {
                     className={classes.button}
                     onClick={this.sendForm}
                 >
-                                Primary
+                    {!!isEditMode? 'Save':'Create'}
                 </Button>
             </form>
         );
