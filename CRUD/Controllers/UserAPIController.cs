@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CRUD.Common.Entities;
 using CRUD.Common.Services;
+using CRUD.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CRUD.Controllers
@@ -26,7 +27,7 @@ namespace CRUD.Controllers
         }
 
         [HttpPost]
-        public JsonResult Post([FromBody] User user)
+        public JsonResult Post([FromBody] UserModel user)
         {
             if (this.ModelState.IsValid)
             {
